@@ -15,6 +15,7 @@ import { SignMessage } from "./signing";
 import { DeployProgram } from "./deployProgram";
 import { RequestRecordPlaintexts } from "./requestRecordPlainText";
 import { RequestRecords } from "./requestTransactionHistory";
+import { CreateTransaction } from "./createTransaction";
 
 // Default styles that can be overridden by your app
 require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
@@ -46,6 +47,7 @@ export const Wallet: FC = () => {
         <DeployProgram />
         <RequestRecordPlaintexts />
         <RequestRecords />
+        <CreateTransaction />
       </WalletModalProvider>
     </WalletProvider>
   );
