@@ -15,11 +15,14 @@ export const RequestRecords: FC = () => {
     const program = "credits.aleo";
     if (!publicKey) throw new WalletNotConnectedError();
     console.log("pub key: " + publicKey);
-    const connectRequest = await connect(DecryptPermission.OnChainHistory, WalletAdapterNetwork.Testnet, [program]);
-    console.log("connect request: " + connectRequest);
+    await connect(DecryptPermission.OnChainHistory, WalletAdapterNetwork.Testnet, [program]);
     if (requestTransactionHistory) {
-      const transactions = await requestTransactionHistory(program);
-      console.log("Transactions: " + transactions);
+      try {
+        const transactions = await requestTransactionHistory(program);
+        console.log("Transactions: " + transactions);
+      } catch (e) {
+        console.log("Error: " + e);
+      }
     }
   };
 

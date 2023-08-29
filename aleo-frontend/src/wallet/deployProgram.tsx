@@ -16,7 +16,7 @@ export const DeployProgram: FC = () => {
         add r0 r1 into r2;
         output r2 as u32.private;
     `;
-    const fee = 4_835_000; // This will fail if fee is not set high enough
+    const fee = 1_000_000; // This will fail if fee is not set high enough (4 Aleo)
 
     if (requestTransaction) {
       const aleoDeployment = new Deployment(publicKey, WalletAdapterNetwork.Testnet, program, fee);

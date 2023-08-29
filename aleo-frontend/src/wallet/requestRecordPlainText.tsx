@@ -1,22 +1,38 @@
 import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useState } from "react";
 
 export const RequestRecordPlaintexts: FC = () => {
   const { publicKey, requestRecords } = useWallet();
+  const [inputValue, setInputValue] = useState<string>("");
 
+  const inputHandler = (e: any) => {
+    console.log(e.target.value);
+  };
   const onClick = async () => {
-    const program = "credits.aleo";
-    if (!publicKey) throw new WalletNotConnectedError();
-    if (requestRecords) {
-      const records = await requestRecords(program);
-      console.log("Records: " + records);
+    try {
+      const program = "aleoswap05.aleo";
+      if (!publicKey) throw new WalletNotConnectedError();
+      if (requestRecords) {
+        const records = await requestRecords(program);
+        for (let i = 0; i < records.length; i++) {
+          console.log(records[i]);
+        }
+      }
+    } catch (e) {
+      console.log("Error: " + e);
     }
   };
 
   return (
-    <button onClick={onClick} disabled={!publicKey}>
-      Request Records Plaintexts
-    </button>
+    <>
+      <div>
+        <span>Program Name: </span>
+        <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+        <button onClick={onClick} disabled={!publicKey}>
+          Request Records
+        </button>
+      </div>
+    </>
   );
 };
