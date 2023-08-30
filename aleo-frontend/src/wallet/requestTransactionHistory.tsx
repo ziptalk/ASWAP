@@ -8,7 +8,7 @@ import {
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import React, { FC, useCallback } from "react";
 
-export const RequestRecords: FC = () => {
+export const RequestTransactionHistory: FC = () => {
   const { publicKey, requestTransactionHistory, connect } = useWallet();
 
   const onClick = async () => {
