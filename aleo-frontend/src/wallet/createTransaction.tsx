@@ -52,16 +52,21 @@ export const CreateTransaction: FC = () => {
       if (!program) {
         throw new Error("Invalid program name");
       }
-      const inputs: any = [];
-      const fee = 5_000; // This will fail if fee is not set high enough
+      const inputs: any = ["10field"];
+      const fee = 3_000_000; // This will fail if fee is not set high enough
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
         WalletAdapterNetwork.Testnet,
         program,
-        "transfer_private",
+        "init_demo_tokens",
         inputs,
         fee
       );
+
+      if (requestTransaction) {
+        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
+        await requestTransaction(aleoTransaction);
+      }
     }
   };
 
@@ -72,7 +77,7 @@ export const CreateTransaction: FC = () => {
       }}
       disabled={!publicKey}
     >
-      Create Transaction
+      Init Demo Tokens
     </button>
   );
 };
