@@ -7,7 +7,7 @@ export const CreateTransaction: FC = () => {
 
   const onClick = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
-    const program = "credits.aleo";
+    const program = "swap_demo_testnet.aleo";
 
     // The record here is an output from the Requesting Records above
     // const record =
@@ -36,8 +36,8 @@ export const CreateTransaction: FC = () => {
     const aleoTransaction = Transaction.createTransaction(
       publicKey,
       WalletAdapterNetwork.Testnet,
-      "credits.aleo",
-      "transfer_private",
+      program,
+      "swap",
       inputs,
       fee
     );
