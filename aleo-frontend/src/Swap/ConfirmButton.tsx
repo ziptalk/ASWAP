@@ -1,8 +1,9 @@
 import { Transaction, WalletAdapterNetwork, WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
+import { FC } from "react";
 
-const ConfirmButton = () => {
+export const ConfirmButton: FC = () => {
   const { publicKey, requestTransaction, requestRecords } = useWallet();
 
   const executeSwap = async () => {

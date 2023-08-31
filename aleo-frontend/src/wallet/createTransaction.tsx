@@ -16,10 +16,13 @@ export const CreateTransaction: FC = () => {
       //   '{"id":"0f27d86a-1026-4980-9816-bcdce7569aa4","program_id":"credits.aleo","microcredits":"200000","spent":false,"data":{}}';
       let records: any;
       let targetRecord: any;
+      const amount: number = 10_000;
+
       if (requestRecords) {
         records = await requestRecords(program);
         for (let i = 0; i < records.length; i++) {
           console.log(records[i]);
+          console.log(records[i].data.microcredits);
           if (records[i].spent === false) {
             targetRecord = records[i];
             break;
@@ -28,7 +31,6 @@ export const CreateTransaction: FC = () => {
       }
 
       // Note that the inputs must be formatted in the same order as the Aleo program function expects, otherwise it will fail
-      const amount: number = 10_000;
       const inputs = [targetRecord, receivingAddress, `${amount}u64`];
       const fee = 50_000; // This will fail if fee is not set high enough
 
@@ -53,7 +55,7 @@ export const CreateTransaction: FC = () => {
         throw new Error("Invalid program name");
       }
       const inputs: any = ["12335field"];
-      const fee = 50_000; // This will fail if fee is not set high enough
+      const fee = 5_500_000; // This will fail if fee is not set high enough
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
         WalletAdapterNetwork.Testnet,
@@ -74,7 +76,7 @@ export const CreateTransaction: FC = () => {
         throw new Error("Invalid program name");
       }
       const inputs: any = ["100u64", "6u8", "1000000u128"];
-      const fee = 50_000; // This will fail if fee is not set high enough
+      const fee = 5_500_000; // This will fail if fee is not set high enough
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
         WalletAdapterNetwork.Testnet,
@@ -85,7 +87,8 @@ export const CreateTransaction: FC = () => {
       );
       if (requestTransaction) {
         // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
-        await requestTransaction(aleoTransaction);
+        const response = await requestTransaction(aleoTransaction);
+        console.log(response);
       }
     }
   };
