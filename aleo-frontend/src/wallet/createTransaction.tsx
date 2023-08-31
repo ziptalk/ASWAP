@@ -28,9 +28,9 @@ export const CreateTransaction: FC = () => {
       }
 
       // Note that the inputs must be formatted in the same order as the Aleo program function expects, otherwise it will fail
-      const amount: number = 1_000;
+      const amount: number = 10_000;
       const inputs = [targetRecord, receivingAddress, `${amount}u64`];
-      const fee = 5_000; // This will fail if fee is not set high enough
+      const fee = 50_000; // This will fail if fee is not set high enough
 
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
@@ -52,8 +52,8 @@ export const CreateTransaction: FC = () => {
       if (!program) {
         throw new Error("Invalid program name");
       }
-      const inputs: any = ["10field"];
-      const fee = 3_000_000; // This will fail if fee is not set high enough
+      const inputs: any = ["12335field"];
+      const fee = 50_000; // This will fail if fee is not set high enough
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
         WalletAdapterNetwork.Testnet,
@@ -62,7 +62,27 @@ export const CreateTransaction: FC = () => {
         inputs,
         fee
       );
-
+      if (requestTransaction) {
+        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
+        await requestTransaction(aleoTransaction);
+      }
+    }
+    // create tokens
+    else if (option === 2) {
+      const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
+      if (!program) {
+        throw new Error("Invalid program name");
+      }
+      const inputs: any = ["100u64", "6u8", "1000000u128"];
+      const fee = 50_000; // This will fail if fee is not set high enough
+      const aleoTransaction = Transaction.createTransaction(
+        publicKey,
+        WalletAdapterNetwork.Testnet,
+        program,
+        "create_token",
+        inputs,
+        fee
+      );
       if (requestTransaction) {
         // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
         await requestTransaction(aleoTransaction);
@@ -71,13 +91,30 @@ export const CreateTransaction: FC = () => {
   };
 
   return (
-    <button
-      onClick={() => {
-        onClick(1);
-      }}
-      disabled={!publicKey}
-    >
-      Init Demo Tokens
-    </button>
+    <>
+      <button
+        onClick={() => {
+          onClick(0);
+        }}
+        disabled={!publicKey}
+      >
+        Transfer Credits Private
+      </button>
+      <button
+        onClick={() => {
+          onClick(1);
+        }}
+        disabled={!publicKey}
+      >
+        Init Demo Tokens
+      </button>
+      <button
+        onClick={() => {
+          onClick(2);
+        }}
+      >
+        Create Token
+      </button>
+    </>
   );
 };
