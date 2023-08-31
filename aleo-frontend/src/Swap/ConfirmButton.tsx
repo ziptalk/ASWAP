@@ -8,7 +8,7 @@ const ConfirmButton = () => {
   const executeSwap = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
 
-    const program: string | undefined = process.env.PROGRAM_NAME;
+    const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
     if (!program) {
       throw new Error("Invalid program name");
     }

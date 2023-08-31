@@ -9,7 +9,7 @@ const PairBox = () => {
       <PairTokenWrapper>
         <PairTokenBox>
           <PairTokenimg />
-          <PairTokenText>QVE</PairTokenText>
+          <PairTokenText>BTC</PairTokenText>
         </PairTokenBox>
         <PairTokenBox>
           <img src={IcEth} alt="eth" />

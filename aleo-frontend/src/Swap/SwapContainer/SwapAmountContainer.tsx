@@ -10,7 +10,7 @@ interface SwapAmountContainerProps {
 }
 
 const SwapAmountContainer = (props: SwapAmountContainerProps) => {
-  const [isSwitchSwap, setIsSwitchSwap] = useState(["QVE", "ETH"]);
+  const [isSwitchSwap, setIsSwitchSwap] = useState(["BTC", "ETH"]);
   const { type } = props;
 
   const handleSwitchSwap = () => {

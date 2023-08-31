@@ -27,7 +27,7 @@ const PoolLiquidity = (props: PoolLiquidityProps) => {
           </TTLInsideBox>
           <TTLInsideBox>
             <TTLTokenimg />
-            <TVLText>QVE</TVLText>
+            <TVLText>BTC</TVLText>
             <TVLText>000,000K</TVLText>
           </TTLInsideBox>
         </TTLBottomBox>
@@ -37,7 +37,7 @@ const PoolLiquidity = (props: PoolLiquidityProps) => {
           <TVLText>Exchange Rate</TVLText>
           <TVLText bold={true}>
             1 ETH <img src={IcFlow} alt="flow" style={{ marginRight: "3px" }} />
-            0.023QVE
+            0.023BTC
           </TVLText>
         </ExchangeRateBox>
       )}
