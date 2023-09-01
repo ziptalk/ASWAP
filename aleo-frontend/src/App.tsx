@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./App.css";
 import { Wallet } from "./wallet/wallet";
 import { SwapNav } from "./Swap/SwapNav";
@@ -7,10 +7,24 @@ import Liquidity from "./Swap/Liquidity";
 import styled from "@emotion/styled";
 import { RequestRecord } from "./Records/RequestRecords";
 import { CreateTransaction } from "./CreateTransaction/createTransaction";
+import { MintTokens } from "./MintToken/MintTokens";
+import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
+import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
+import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
+import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
 
 function App() {
   const [option, setOption] = useState("Swap");
   const [menuOption, setMenuOption] = useState(0);
+
+  const wallets = useMemo(
+    () => [
+      new LeoWalletAdapter({
+        appName: "Leo Demo App",
+      }),
+    ],
+    []
+  );
 
   const handleSwitchOption = (option: string) => {
     if (option === "Swap") {
@@ -23,55 +37,73 @@ function App() {
   const handleMenuOption = (option: number) => {
     setMenuOption(option);
   };
+
   return (
     <div className="App">
       <header className="App-header">
-        <Header>
-          <Title>Simple Aleo Swap</Title>
-          <NavBar>
-            <SwapButton
-              onClick={() => {
-                handleMenuOption(0);
-              }}
-            >
-              Swap
-            </SwapButton>
-            <MintButton
-              onClick={() => {
-                handleMenuOption(1);
-              }}
-            >
-              Mint Tokens
-            </MintButton>
-            <RequestRecordButton
-              onClick={() => {
-                handleMenuOption(2);
-              }}
-            >
-              Request Records
-            </RequestRecordButton>
-          </NavBar>
-          <Wallet />
-        </Header>
-        <CreateTransaction />
-        <Body>
-          {menuOption === 0 ? (
-            <SwapAndLiquidityContainer>
-              <SwapNav option={option} handleSwitchOption={handleSwitchOption} />
-              {option === "Swap" ? <SwapContainer /> : <Liquidity />}
-            </SwapAndLiquidityContainer>
-          ) : (
-            <></>
-          )}
-          {menuOption === 1 ? <MintTokenContainer></MintTokenContainer> : <></>}
-          {menuOption === 2 ? (
-            <RequestRecordContainer>
-              <RequestRecord />
-            </RequestRecordContainer>
-          ) : (
-            <></>
-          )}
-        </Body>
+        <WalletProvider
+          wallets={wallets}
+          decryptPermission={DecryptPermission.UponRequest}
+          network={WalletAdapterNetwork.Testnet}
+          autoConnect
+        >
+          {" "}
+          <WalletModalProvider>
+            <Header>
+              <Title>Simple Aleo Swap</Title>
+              <NavBar>
+                <SwapButton
+                  onClick={() => {
+                    handleMenuOption(0);
+                  }}
+                >
+                  Swap
+                </SwapButton>
+                <MintButton
+                  onClick={() => {
+                    handleMenuOption(1);
+                  }}
+                >
+                  Mint Tokens
+                </MintButton>
+                <RequestRecordButton
+                  onClick={() => {
+                    handleMenuOption(2);
+                  }}
+                >
+                  Request Records
+                </RequestRecordButton>
+              </NavBar>
+              <Wallet />
+            </Header>
+
+            <CreateTransaction />
+            <Body>
+              {menuOption === 0 ? (
+                <SwapAndLiquidityContainer>
+                  <SwapNav option={option} handleSwitchOption={handleSwitchOption} />
+                  {option === "Swap" ? <SwapContainer /> : <Liquidity />}
+                </SwapAndLiquidityContainer>
+              ) : (
+                <></>
+              )}
+              {menuOption === 1 ? (
+                <MintTokenContainer>
+                  <MintTokens />
+                </MintTokenContainer>
+              ) : (
+                <></>
+              )}
+              {menuOption === 2 ? (
+                <RequestRecordContainer>
+                  <RequestRecord />
+                </RequestRecordContainer>
+              ) : (
+                <></>
+              )}
+            </Body>
+          </WalletModalProvider>
+        </WalletProvider>
       </header>
     </div>
   );
