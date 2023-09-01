@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
@@ -38,13 +40,8 @@ export const RequestRecord: FC = () => {
     <>
       <Container>
         <ProgramInputContainer>
-          <ProgramName>Program Name</ProgramName>
-          <input
-            type="text"
-            placeholder="example.aleo"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
+          <ProgramName>Program Name: </ProgramName>
+          <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
         </ProgramInputContainer>
 
         <RequestButton onClick={onClick} disabled={!publicKey}>
@@ -66,12 +63,12 @@ const Container = styled.div`
 const ProgramInputContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 300px;
+  justify-content: space-evenly;
 `;
 
 const ProgramName = styled.div`
   font-size: 18px;
+  width: 100%;
   color: white;
   font-size: 16px;
   font-style: normal;
@@ -80,24 +77,13 @@ const ProgramName = styled.div`
 `;
 
 const RequestButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  width: 200px;
-  padding: 9px 0;
-
-  border-radius: 20px;
-  text-align: center;
-  font-size: 18px;
+  width: 80%;
+  height: 30px;
+  border-radius: 10px;
+  background-color: blue;
+  color: white;
+  font-size: 16px;
   font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: -0.09px;
-
-  text-align: center;
+  font-weight: 500;
   cursor: pointer;
-
-  transition: all 0.3s ease-in-out;
 `;

@@ -11,16 +11,13 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
-import { SignMessage } from "./signing";
-import { RequestTransactionHistory } from "./requestTransactionHistory";
-import { CreateTransaction } from "./createTransaction";
 import styled from "@emotion/styled";
-import { RequestRecord } from "./requestRecord";
+import { DeployProgram } from "./deployProgram";
 
 // Default styles that can be overridden by your app
 require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
 
-export const Wallet: FC = () => {
+export const Deploy: FC = () => {
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
@@ -38,23 +35,8 @@ export const Wallet: FC = () => {
       autoConnect
     >
       <WalletModalProvider>
-        <WalletConnect>
-          <WalletMultiButton />
-          {/* <WalletConnectButton /> */}
-          <WalletDisconnectButton />
-        </WalletConnect>
-        {/* <WalletModal /> */}
-        {/* <WalletModalButton /> */}
-        {/* <SignMessage /> */}
-        <RequestRecord />
-        {/* <RequestTransactionHistory /> */}
-        <CreateTransaction />
+        <DeployProgram />
       </WalletModalProvider>
     </WalletProvider>
   );
 };
-
-const WalletConnect = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
