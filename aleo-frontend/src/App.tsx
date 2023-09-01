@@ -76,34 +76,34 @@ function App() {
               </NavBar>
               <Wallet />
             </Header>
+
+            <CreateTransaction />
+            <Body>
+              {menuOption === 0 ? (
+                <SwapAndLiquidityContainer>
+                  <SwapNav option={option} handleSwitchOption={handleSwitchOption} />
+                  {option === "Swap" ? <SwapContainer /> : <Liquidity />}
+                </SwapAndLiquidityContainer>
+              ) : (
+                <></>
+              )}
+              {menuOption === 1 ? (
+                <MintTokenContainer>
+                  <MintTokens />
+                </MintTokenContainer>
+              ) : (
+                <></>
+              )}
+              {menuOption === 2 ? (
+                <RequestRecordContainer>
+                  <RequestRecord />
+                </RequestRecordContainer>
+              ) : (
+                <></>
+              )}
+            </Body>
           </WalletModalProvider>
         </WalletProvider>
-
-        <CreateTransaction />
-        <Body>
-          {menuOption === 0 ? (
-            <SwapAndLiquidityContainer>
-              <SwapNav option={option} handleSwitchOption={handleSwitchOption} />
-              {option === "Swap" ? <SwapContainer /> : <Liquidity />}
-            </SwapAndLiquidityContainer>
-          ) : (
-            <></>
-          )}
-          {menuOption === 1 ? (
-            <MintTokenContainer>
-              <MintTokens />
-            </MintTokenContainer>
-          ) : (
-            <></>
-          )}
-          {menuOption === 2 ? (
-            <RequestRecordContainer>
-              <RequestRecord />
-            </RequestRecordContainer>
-          ) : (
-            <></>
-          )}
-        </Body>
       </header>
     </div>
   );

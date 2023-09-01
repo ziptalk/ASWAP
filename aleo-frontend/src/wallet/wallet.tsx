@@ -41,7 +41,7 @@ export const Wallet: FC = () => {
         {/* <WalletModal /> */}
         {/* <WalletModalButton /> */}
         {/* <SignMessage /> */}
-        <RequestRecord />
+        {/* <RequestRecord /> */}
         {/* <RequestTransactionHistory /> */}
       </WalletModalProvider>
     </WalletProvider>
