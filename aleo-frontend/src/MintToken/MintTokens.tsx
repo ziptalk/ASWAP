@@ -4,12 +4,10 @@ import {
   WalletAdapterNetwork,
   WalletNotConnectedError,
 } from "@demox-labs/aleo-wallet-adapter-base";
-import { WalletProvider, useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import { TokenLists } from "../constants";
-import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
-import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 
 export const MintTokens: FC = () => {
   const { publicKey, requestTransaction, requestRecords } = useWallet();
@@ -26,15 +24,6 @@ export const MintTokens: FC = () => {
     console.log(e.target.value);
     setMintAmount(e.target.value);
   };
-
-  const wallets = useMemo(
-    () => [
-      new LeoWalletAdapter({
-        appName: "Leo Demo App",
-      }),
-    ],
-    []
-  );
 
   const mint = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
@@ -54,55 +43,51 @@ export const MintTokens: FC = () => {
       inputs,
       fee
     );
-    if (requestTransaction) {
-      // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
-      await requestTransaction(aleoTransaction);
+
+    try {
+      if (requestTransaction) {
+        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
+        await requestTransaction(aleoTransaction);
+      }
+    } catch (e) {
+      console.log("Error: " + e);
     }
   };
 
   return (
-    <WalletProvider
-      wallets={wallets}
-      decryptPermission={DecryptPermission.UponRequest}
-      network={WalletAdapterNetwork.Testnet}
-      autoConnect
-    >
-      <WalletModalProvider>
-        <Container>
-          <TokenSelectBox>
-            <TokenSelectTitle>Selected Token: {selectedTokenName}</TokenSelectTitle>
-            <TokenList>
-              {TokenLists.map((token: any) => (
-                <TokensName
-                  onClick={() => {
-                    handleTokenSelect(token.name, token.id);
-                  }}
-                >
-                  {token.name}
-                </TokensName>
-              ))}
-            </TokenList>
-          </TokenSelectBox>
-          <AmountInputBox>
-            <AmountInputTitle>Amount</AmountInputTitle>
-            <InputBox>
-              <AmountInput
-                type="text"
-                placeholder="0.0"
-                onChange={(e) => {
-                  handleAmountInput(e);
-                }}
-              />
-            </InputBox>
-          </AmountInputBox>
-          <FeeBox>
-            <FeeTitle>Fee</FeeTitle>
-            <FeeAmount>{fee / 10 ** 6} Aleo</FeeAmount>
-          </FeeBox>
-          <MintButton onClick={mint}>Mint Tokens</MintButton>
-        </Container>
-      </WalletModalProvider>
-    </WalletProvider>
+    <Container>
+      <TokenSelectBox>
+        <TokenSelectTitle>Selected Token: {selectedTokenName}</TokenSelectTitle>
+        <TokenList>
+          {TokenLists.map((token: any) => (
+            <TokensName
+              onClick={() => {
+                handleTokenSelect(token.name, token.id);
+              }}
+            >
+              {token.name}
+            </TokensName>
+          ))}
+        </TokenList>
+      </TokenSelectBox>
+      <AmountInputBox>
+        <AmountInputTitle>Amount</AmountInputTitle>
+        <InputBox>
+          <AmountInput
+            type="text"
+            placeholder="0.0"
+            onChange={(e) => {
+              handleAmountInput(e);
+            }}
+          />
+        </InputBox>
+      </AmountInputBox>
+      <FeeBox>
+        <FeeTitle>Fee</FeeTitle>
+        <FeeAmount>{fee / 10 ** 6} Aleo</FeeAmount>
+      </FeeBox>
+      <MintButton onClick={mint}>Mint Tokens</MintButton>
+    </Container>
   );
 };
 
@@ -125,6 +110,8 @@ const TokenSelectBox = styled.div``;
 const TokenSelectTitle = styled.div`
   font-size: 17px;
   margin-bottom: 10px;
+  font-style: normal;
+  font-weight: 500;
 `;
 const TokenList = styled.div`
   display: flex;
@@ -142,6 +129,8 @@ const AmountInputBox = styled.div`
 `;
 const AmountInputTitle = styled.div`
   font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
 `;
 const InputBox = styled.div`
   display: flex;
@@ -168,9 +157,13 @@ const FeeBox = styled.div`
 `;
 const FeeTitle = styled.div`
   font-size: 17px;
+  font-style: normal;
+  font-weight: 500;
 `;
 const FeeAmount = styled.div`
   font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
   margin-right: 20px;
 `;
 

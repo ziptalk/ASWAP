@@ -11,6 +11,7 @@ interface SwapAmountContainerProps {
 
 const SwapAmountContainer = (props: SwapAmountContainerProps) => {
   const [isSwitchSwap, setIsSwitchSwap] = useState(["BTC", "ETH"]);
+  const [tokenIds, setTokenIds] = useState([0, 1]); // [from, to]
   const { type } = props;
 
   const handleSwitchSwap = () => {
@@ -23,7 +24,7 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
       {type === "liquidity" && <LiquidityTitle>Amount</LiquidityTitle>}
       {type === "Swap" && <SwapAmountTitle>From.</SwapAmountTitle>}
       <StyledInput text={isSwitchSwap[0]} />
-      <BalanceBox type={type} />
+      <BalanceBox type={type} tokenId={tokenIds[0]} />
       {type === "liquidity" && <Space />}
       {type === "Swap" && (
         <SwitchWrapper>
@@ -34,7 +35,7 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
       )}
       {type === "Swap" && <SwapAmountTitle>To.</SwapAmountTitle>}
       <StyledInput text={isSwitchSwap[1]} />
-      <BalanceBox type={type} />
+      <BalanceBox type={type} tokenId={tokenIds[1]} />
     </SwapWhiteBox>
   );
 };
