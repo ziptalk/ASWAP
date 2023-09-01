@@ -1,21 +1,23 @@
 import React, { FC, useMemo } from "react";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import {
+  WalletConnectButton,
   WalletDisconnectButton,
+  WalletIcon,
+  WalletModal,
+  WalletModalButton,
   WalletModalProvider,
   WalletMultiButton,
 } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
-import { RequestTransactionHistory } from "./requestTransactionHistory";
 import styled from "@emotion/styled";
-import { SignMessage } from "./signing";
-import { RequestRecord } from "../Records/RequestRecords";
+import { DeployProgram } from "./deployProgram";
 
 // Default styles that can be overridden by your app
 require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
 
-export const Wallet: FC = () => {
+export const Deploy: FC = () => {
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
@@ -33,22 +35,8 @@ export const Wallet: FC = () => {
       autoConnect
     >
       <WalletModalProvider>
-        <WalletConnect>
-          <WalletMultiButton />
-          {/* <WalletConnectButton /> */}
-          <WalletDisconnectButton />
-        </WalletConnect>
-        {/* <WalletModal /> */}
-        {/* <WalletModalButton /> */}
-        {/* <SignMessage /> */}
-        <RequestRecord />
-        {/* <RequestTransactionHistory /> */}
+        <DeployProgram />
       </WalletModalProvider>
     </WalletProvider>
   );
 };
-
-const WalletConnect = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
