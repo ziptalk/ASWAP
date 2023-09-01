@@ -1,12 +1,10 @@
-"use client"; // This is a client component 👈🏽
-
 import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
 import React, { FC, useCallback, useState } from "react";
 
 export const RequestRecord: FC = () => {
-  const { publicKey, requestRecords } = useWallet();
+  const { wallet, publicKey, requestRecords } = useWallet();
   const [inputValue, setInputValue] = useState<string>("");
 
   const inputHandler = (e: any) => {
