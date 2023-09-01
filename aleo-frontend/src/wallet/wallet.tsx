@@ -13,7 +13,7 @@ import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
 import { SignMessage } from "./signing";
 import { RequestTransactionHistory } from "./requestTransactionHistory";
-import { CreateTransaction } from "./createTransaction";
+import { CreateTransaction } from "../CreateTransaction/createTransaction";
 import styled from "@emotion/styled";
 import { RequestRecord } from "./requestRecord";
 
@@ -40,15 +40,12 @@ export const Wallet: FC = () => {
       <WalletModalProvider>
         <WalletConnect>
           <WalletMultiButton />
-          {/* <WalletConnectButton /> */}
           <WalletDisconnectButton />
         </WalletConnect>
         {/* <WalletModal /> */}
         {/* <WalletModalButton /> */}
         {/* <SignMessage /> */}
-        <RequestRecord />
         {/* <RequestTransactionHistory /> */}
-        <CreateTransaction />
       </WalletModalProvider>
     </WalletProvider>
   );
@@ -56,5 +53,5 @@ export const Wallet: FC = () => {
 
 const WalletConnect = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
 `;

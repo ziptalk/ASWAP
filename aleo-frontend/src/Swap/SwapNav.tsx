@@ -25,7 +25,7 @@ export const SwapNav = (props: SwapNavProps) => {
         ) : (
           <img src={IcLiqudity} alt="liqudity" />
         )}
-        Add Liqudity
+        Add Liquidity
       </SwapNavBox>
     </SwapNavContainer>
   );
