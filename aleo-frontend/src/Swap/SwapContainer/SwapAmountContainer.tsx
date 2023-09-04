@@ -4,6 +4,7 @@ import StyledInput from "../StyledInput";
 import BalanceBox from "../BalanceBox";
 import IcSwitch from "../../assets/icons/common/Ic_switch.svg";
 import { useState } from "react";
+import ConfirmButton from "../ConfirmButton";
 
 interface SwapAmountContainerProps {
   type?: string;
@@ -11,7 +12,11 @@ interface SwapAmountContainerProps {
 
 const SwapAmountContainer = (props: SwapAmountContainerProps) => {
   const [isSwitchSwap, setIsSwitchSwap] = useState(["BTC", "ETH"]);
-  const [tokenIds, setTokenIds] = useState([0, 1]); // [from, to]
+  const [tokenIds, setTokenIds] = useState([1, 2]); // [from, to]
+  const [selectedTokenFrom, setSelectedTokenFrom] = useState(0);
+  const [selectedTokenTo, setSelectedTokenTo] = useState(0);
+  const [amountFrom, setAmountFrom] = useState(0);
+  const [amountTo, setAmountTo] = useState(0);
   const { type } = props;
 
   const handleSwitchSwap = () => {
@@ -19,24 +24,61 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
     setIsSwitchSwap(newSwitch);
   };
 
+  const handleSelectTokenFrom = (tokenId: number) => {
+    setSelectedTokenFrom(tokenId);
+  };
+
+  const handleSelectTokenTo = (tokenId: number) => {
+    setSelectedTokenTo(tokenId);
+  };
+
+  const handleAmountFrom = (amount: number) => {
+    setAmountFrom(amount);
+  };
+
+  const handleAmountTo = (amount: number) => {
+    setAmountTo(amount);
+  };
+
   return (
-    <SwapWhiteBox>
-      {type === "liquidity" && <LiquidityTitle>Amount</LiquidityTitle>}
-      {type === "Swap" && <SwapAmountTitle>From.</SwapAmountTitle>}
-      <StyledInput text={isSwitchSwap[0]} />
-      <BalanceBox type={type} tokenId={tokenIds[0]} />
-      {type === "liquidity" && <Space />}
-      {type === "Swap" && (
-        <SwitchWrapper>
-          <SwitchBox onClick={handleSwitchSwap}>
-            <img src={IcSwitch} alt="switch" style={{ position: "absolute", top: "10px", left: "8.8px" }} />
-          </SwitchBox>
-        </SwitchWrapper>
-      )}
-      {type === "Swap" && <SwapAmountTitle>To.</SwapAmountTitle>}
-      <StyledInput text={isSwitchSwap[1]} />
-      <BalanceBox type={type} tokenId={tokenIds[1]} />
-    </SwapWhiteBox>
+    <>
+      <SwapWhiteBox>
+        {type === "liquidity" && <LiquidityTitle>Amount</LiquidityTitle>}
+        {type === "Swap" && <SwapAmountTitle>From.</SwapAmountTitle>}
+        <StyledInput
+          text={isSwitchSwap[0]}
+          handleSelectTokenFrom={handleSelectTokenFrom}
+          handleAmountFrom={handleAmountFrom}
+        />
+        <BalanceBox type={type} tokenId={tokenIds[0]} />
+        {type === "liquidity" && <Space />}
+        {type === "Swap" && (
+          <SwitchWrapper>
+            <SwitchBox onClick={handleSwitchSwap}>
+              <img src={IcSwitch} alt="switch" style={{ position: "absolute", top: "10px", left: "8.8px" }} />
+            </SwitchBox>
+          </SwitchWrapper>
+        )}
+        {type === "Swap" && <SwapAmountTitle>To.</SwapAmountTitle>}
+        {type === "Swap" && (
+          <>
+            <StyledInput
+              text={isSwitchSwap[1]}
+              handleSelectTokenTo={handleSelectTokenTo}
+              handleAmountTo={handleAmountTo}
+            />
+            <BalanceBox type={type} tokenId={tokenIds[1]} />
+          </>
+        )}
+      </SwapWhiteBox>
+      <ConfirmButton
+        text={type ? type : ""}
+        amount1={amountFrom}
+        amount2={amountTo}
+        token1={selectedTokenFrom}
+        token2={selectedTokenTo}
+      />
+    </>
   );
 };
 
