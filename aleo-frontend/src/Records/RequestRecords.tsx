@@ -6,6 +6,7 @@ import React, { FC, useCallback, useState } from "react";
 export const RequestRecord: FC = () => {
   const { wallet, publicKey, requestRecords } = useWallet();
   const [inputValue, setInputValue] = useState<string>("");
+  const [requestList, setRequestList] = useState<any>([]);
 
   const inputHandler = (e: any) => {
     console.log(e.target.value);
@@ -28,6 +29,7 @@ export const RequestRecord: FC = () => {
         for (let i = 0; i < records.length; i++) {
           console.log(records[i]);
         }
+        setRequestList(records);
       }
     } catch (e) {
       console.log("Error: " + e);
@@ -50,6 +52,16 @@ export const RequestRecord: FC = () => {
         <RequestButton onClick={onClick} disabled={!publicKey}>
           Request Records
         </RequestButton>
+
+        <RequestLists>
+          {requestList.map((request: any) => (
+            <RequestList>
+              <RequestItem>
+                {request.id} {JSON.stringify(request.data)} {`Spent: ${request.spent.toString()}`}
+              </RequestItem>
+            </RequestList>
+          ))}
+        </RequestLists>
       </Container>
     </>
   );
@@ -100,4 +112,30 @@ const RequestButton = styled.button`
   cursor: pointer;
 
   transition: all 0.3s ease-in-out;
+`;
+
+const RequestLists = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+`;
+
+const RequestList = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 300px;
+  padding: 10px 0;
+  border-bottom: 1px solid #33343e;
+`;
+
+const RequestItem = styled.div`
+  font-size: 18px;
+  color: white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 26px;
 `;
