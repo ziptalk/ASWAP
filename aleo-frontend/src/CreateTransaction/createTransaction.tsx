@@ -19,7 +19,6 @@ export const CreateTransaction: FC = () => {
   let makerAddress: any = [myAddr];
   let receivingAddress = "aleo120ku5evll5gf7x5wjv4xnvlxvdetg6tum0rlw9883wd0jvrqpspscu4tsl";
   // TODO: 트랜잭션 서명 요청 후 reject 시에 에러 핸들링
-  // TODO: 모든 버튼UI 수정 및 각 기능에 맞는 소스코드로 이동 필요
   // TODO: 함수 이름 7가지 config로 따로 빼기
   const onClick = async (option: number) => {
     if (!publicKey) throw new WalletNotConnectedError();
@@ -115,74 +114,8 @@ export const CreateTransaction: FC = () => {
         await requestTransaction(aleoTransaction);
       }
     }
-    // mint private
-    // TODO: coinType, coinAmount 필드값 들어갈 input 연결 필요
-    else if (option === 4) {
-      let coinType = "1u64";
-      let coinAmount = "1000000u128";
-      const inputs: any = [myAddr, coinType, coinAmount];
-      const aleoTransaction = Transaction.createTransaction(
-        publicKey,
-        WalletAdapterNetwork.Testnet,
-        program,
-        "mint_private",
-        inputs,
-        fee
-      );
-      if (requestTransaction) {
-        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
-        await requestTransaction(aleoTransaction);
-      }
-    }
-    // Add liquidity
-    // TODO: amount 값 들어갈 input 연결 필요
-    else if (option === 5) {
-      let records: any;
-      let targetRecord: any;
-      try {
-        if (requestRecords) {
-          records = await requestRecords(program);
-          for (let i = 0; i < records.length; i++) {
-            console.log(records[i]);
-            console.log(records[i].data.microcredits);
-            if (records[i].spent === false) {
-              targetRecord = records[i];
-              break;
-            }
-          }
-        }
-      } catch (e) {
-        console.log("Error: " + e);
-      }
-
-      // let myRecord = {
-      //   "id": "4ba25dfa-4c53-5d2a-9afe-c820b141e3ec",
-      //   "owner": "aleo120ku5evll5gf7x5wjv4xnvlxvdetg6tum0rlw9883wd0jvrqpspscu4tsl",
-      //   "program_id": "swap_demo_testnet.aleo",
-      //   "spent": false,
-      //   "recordName": "Token",
-      //   "data": {
-      //     "amount": "10000u128.private",
-      //     "token_id": "1u64.private"
-      //   }
-      // };
-      let liquidityAmount = "100u128";
-      const inputs: any = [targetRecord, myAddr, liquidityAmount];
-      const aleoTransaction = Transaction.createTransaction(
-        publicKey,
-        WalletAdapterNetwork.Testnet,
-        program,
-        "add_liquidity",
-        inputs,
-        fee
-      );
-      if (requestTransaction) {
-        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
-        await requestTransaction(aleoTransaction);
-      }
-    }
     // remove liquidity
-    else if (option === 6) {
+    else if (option === 4) {
       let liquidityAmount = "1000u128";
       let coinType = "1u64";
       const inputs: any = [coinType, liquidityAmount];
@@ -199,58 +132,7 @@ export const CreateTransaction: FC = () => {
         await requestTransaction(aleoTransaction);
       }
     }
-    // swap
-    // TODO: Swap signature 인풋으로 들어갈 요소 알아내기
-    else if (option === 7) {
-      const message = "a message to sign";
-      const bytes = new TextEncoder().encode(message);
-      const signatureBytes = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytes);
-      const signature = new TextDecoder().decode(signatureBytes);
-      alert("Signed message: " + signature);
-      let records: any;
-      let targetRecord: any;
 
-      if (requestRecords) {
-        records = await requestRecords(program);
-        for (let i = 0; i < records.length; i++) {
-          console.log(records[i]);
-          console.log(records[i].data.microcredits);
-          if (records[i].spent === false) {
-            targetRecord = records[i];
-            break;
-          }
-        }
-      }
-
-      // let myRecord = {
-      //   "id": "c5a5988f-3ab8-5a5b-ad0d-6e452a8fcb83",
-      //   "owner": "aleo120ku5evll5gf7x5wjv4xnvlxvdetg6tum0rlw9883wd0jvrqpspscu4tsl",
-      //   "program_id": "swap_demo_testnet.aleo",
-      //   "spent": false,
-      //   "recordName": "Token",
-      //   "data": {
-      //     "amount": "1000000u128.private",
-      //     "token_id": "1u64.private"
-      //   }
-      // };
-      const inputs: any = [
-        targetRecord,
-        ["100u128", "100u128", "1u64", "2u64", myAddr, "1field", "600000u32"],
-        signature,
-      ];
-      const aleoTransaction = Transaction.createTransaction(
-        publicKey,
-        WalletAdapterNetwork.Testnet,
-        program,
-        "swap",
-        inputs,
-        fee
-      );
-      if (requestTransaction) {
-        // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
-        await requestTransaction(aleoTransaction);
-      }
-    }
   };
 
   return (
@@ -290,29 +172,9 @@ export const CreateTransaction: FC = () => {
           onClick(4);
         }}
       >
-        Mint Private
-      </button>
-      <button
-        onClick={() => {
-          onClick(5);
-        }}
-      >
-        Add liquidity
-      </button>
-      <button
-        onClick={() => {
-          onClick(6);
-        }}
-      >
         Remove liquidity
       </button>
-      <button
-        onClick={() => {
-          onClick(7);
-        }}
-      >
-        Swap
-      </button>
+
     </Container>
   );
 };
