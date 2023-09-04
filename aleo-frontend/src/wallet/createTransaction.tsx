@@ -3,6 +3,7 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import React, { FC, useCallback } from "react";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 
+
 import BigNumber from 'bignumber.js';
 
 export const toDecimals = (amount: number, decimals: number) =>
@@ -12,26 +13,30 @@ export const toDecimals = (amount: number, decimals: number) =>
 
 export const CreateTransaction: FC = () => {
   const { publicKey, requestTransaction, requestRecords, wallet } = useWallet();
-  const fee = 5_500_000; // This will fail if fee is not set high enough
-  
-  let myAddr = "aleo120ku5evll5gf7x5wjv4xnvlxvdetg6tum0rlw9883wd0jvrqpspscu4tsl"
+  const myAddr = process.env.REACT_APP_ADDRESS1;
+  const receivingAddress = process.env.REACT_APP_ADDRESS2;
   let makerAddress: any = [myAddr];
-  let receivingAddress = "aleo120ku5evll5gf7x5wjv4xnvlxvdetg6tum0rlw9883wd0jvrqpspscu4tsl";
+  const pk_sig= process.env.REACT_APP_PK_SIG;
+  const pr_sig = process.env.REACT_APP_PR_SIG;
+  const sk_prf = process.env.REACT_APP_SK_PRF;
+  const chal = process.env.REACT_APP_CHALLENGE;
+  const res = process.env.REACT_APP_RESPONSE;
+  const nonce = process.env.REACT_APP_NONCE;
+  const fee = 5_500_000; // This will fail if fee is not set high enough
   // TODO: 트랜잭션 서명 요청 후 reject 시에 에러 핸들링
   // TODO: 모든 버튼UI 수정 및 각 기능에 맞는 소스코드로 이동 필요
-  // TODO: 함수 이름 7가지 config로 따로 빼기 
+  // TODO: 함수 이름 7가지 config로 따로 빼기
+ 
   const onClick = async (option: number) => {
     if (!publicKey) throw new WalletNotConnectedError();
     const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
       if (!program) {
         throw new Error("Invalid program name");
     }
+    
     if (option === 0) {
       const program = "credits.aleo";
       
-      // The record here is an output from the Requesting Records above
-      // const record =
-      //   '{"id":"0f27d86a-1026-4980-9816-bcdce7569aa4","program_id":"credits.aleo","microcredits":"200000","spent":false,"data":{}}';
       let records: any;
       let targetRecord: any;
       const amount: number = 10_000;
@@ -198,13 +203,13 @@ export const CreateTransaction: FC = () => {
     // swap
     // TODO: Swap signature 인풋으로 들어갈 요소 알아내기
     else if (option === 7) {
-      const message = "a message to sign";
-      const bytes = new TextEncoder().encode(message);
-      const signatureBytes = await (
-        wallet?.adapter as LeoWalletAdapter
-      ).signMessage(bytes);
-      const signature = new TextDecoder().decode(signatureBytes);
-      alert("Signed message: " + signature);
+      // const message = "a message to sign";
+      // const bytes = new TextEncoder().encode(message);
+      // const signatureBytes = await (
+      //   wallet?.adapter as LeoWalletAdapter
+      // ).signMessage(bytes);
+      // const signature = new TextDecoder().decode(signatureBytes);
+      // alert("Signed message: " + signature);
       let records: any;
       let targetRecord: any;
 
@@ -231,9 +236,26 @@ export const CreateTransaction: FC = () => {
       //     "token_id": "1u64.private"
       //   }
       // };
-      const inputs: any = [targetRecord,
-      ["100u128","100u128","1u64","2u64",myAddr,"1field","600000u32"],
-      signature];
+
+
+      let mySig =`{
+        "challenge": "${res}",
+        "response": "${chal}",
+        "pk_sig": "${pk_sig}", 
+        "pr_sig": "${pr_sig}",
+        "sk_prf": "${sk_prf}"
+      }`;
+      //pk_sig, pr_sig, sk_prf는 계정마다 항상 동일함 
+      let myPair = `{
+        "amount_in": "100u128",
+        "amount_out": "100u128",
+        "token_in": "2u64",
+        "token_out": "2u64",
+        "maker_address": "${myAddr}",
+        "nonce": "${nonce}",
+        "valid_until": "600000u32"
+      }`;
+      const inputs: any = [targetRecord,myPair,mySig];
       const aleoTransaction = Transaction.createTransaction(
         publicKey,
         WalletAdapterNetwork.Testnet,
