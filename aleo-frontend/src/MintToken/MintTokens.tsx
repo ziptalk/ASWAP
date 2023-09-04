@@ -121,7 +121,14 @@ const TokenList = styled.div`
 `;
 const TokensName = styled.button`
   font-size: 20px;
-  font-style: normal;
+  font-family: "Montserrat";
+  background-color: #fff;
+
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 `;
 
 const AmountInputBox = styled.div`

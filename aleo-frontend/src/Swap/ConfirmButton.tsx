@@ -135,7 +135,7 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
   };
 
   return (
-    <>
+    <Container>
       {props.text === "Swap" && (
         <StyledComfirmButton
           onClick={() => {
@@ -154,20 +154,25 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
           Add Liquidity
         </StyledComfirmButton>
       )}
-    </>
+    </Container>
   );
 };
 
 export default ConfirmButton;
 
-const StyledComfirmButton = styled.button`
+const Container = styled.div`
   width: 100%;
-  margin-top: 14px;
-  padding: 17px 0;
+  padding: 20px 30px 30px 30px;
+`;
 
+const StyledComfirmButton = styled.button`
+  width: 460px;
+  margin-left: -30px;
   border: none;
   border-radius: 8px;
-  background: #b7b8cd;
+  background: #404144;
+
+  padding: 10px 20px 10px 20px;
 
   color: #fff;
   text-align: center;

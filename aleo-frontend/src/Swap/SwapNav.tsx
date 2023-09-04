@@ -14,30 +14,37 @@ export const SwapNav = (props: SwapNavProps) => {
   const { option, handleSwitchOption } = props;
 
   return (
-    <SwapNavContainer>
-      <SwapNavBox onClick={() => handleSwitchOption("Swap")} status={option === "Swap" ? true : false}>
-        {option === "Swap" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
-        Swap
-      </SwapNavBox>
-      <SwapNavBox onClick={() => handleSwitchOption("Liquidity")} status={option === "Liquidity" ? true : false}>
-        {option === "Liquidity" ? (
-          <img src={IcLiqudityWhite} alt="liqudity" />
-        ) : (
-          <img src={IcLiqudity} alt="liqudity" />
-        )}
-        Add Liqudity
-      </SwapNavBox>
-    </SwapNavContainer>
+    <Container>
+      <SwapNavContainer>
+        <SwapNavBox onClick={() => handleSwitchOption("Swap")} status={option === "Swap" ? true : false}>
+          {option === "Liquidity" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
+          Swap
+        </SwapNavBox>
+        <SwapNavBox onClick={() => handleSwitchOption("Liquidity")} status={option === "Liquidity" ? true : false}>
+          {option === "Swap" ? <img src={IcLiqudityWhite} alt="liquidity" /> : <img src={IcLiqudity} alt="liquidity" />}
+          Add Liquidity
+        </SwapNavBox>
+      </SwapNavContainer>
+    </Container>
   );
 };
 
-const SwapNavContainer = styled.div`
+const Container = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 30px;
 
   width: 100%;
-  margin-top: 41px;
+`;
+
+const SwapNavContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
 `;
 
 const SwapNavBox = styled.div<{ status: boolean }>`
@@ -46,10 +53,12 @@ const SwapNavBox = styled.div<{ status: boolean }>`
   align-items: center;
   gap: 10px;
 
-  width: 50%;
-  padding: 9px 0;
-
+  width: 170px;
+  margin-left: -30px;
+  margin-right: -30px;
+  padding: 10px 20px;
   border-radius: 20px;
+
   text-align: center;
   font-size: 18px;
   font-style: normal;
@@ -63,7 +72,7 @@ const SwapNavBox = styled.div<{ status: boolean }>`
   transition: all 0.3s ease-in-out;
 
   ${({ status }) =>
-    status
+    !status
       ? css`
           background-color: #33343e;
           color: #e8e8ee;

@@ -10,7 +10,6 @@ import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet
 import styled from "@emotion/styled";
 
 // Default styles that can be overridden by your app
-require("@demox-labs/aleo-wallet-adapter-reactui/styles.css");
 
 export const Wallet: FC = () => {
   const wallets = useMemo(
@@ -47,5 +46,6 @@ export const Wallet: FC = () => {
 
 const WalletConnect = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
+  align-items: center;
 `;
