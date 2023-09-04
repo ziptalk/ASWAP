@@ -42,7 +42,7 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
     console.log("tokenRecord", tokenRecord);
 
     const inputs = [tokenRecord, publicKey, props.amount1 + "u128"];
-    const fee = 550_000;
+    const fee = 5_500_000;
 
     const aleoTransaction = Transaction.createTransaction(
       publicKey,
