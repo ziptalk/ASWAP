@@ -239,21 +239,21 @@ export const CreateTransaction: FC = () => {
 
 
       let mySig =`{
-        "challenge": "${res}",
-        "response": "${chal}",
-        "pk_sig": "${pk_sig}", 
-        "pr_sig": "${pr_sig}",
-        "sk_prf": "${sk_prf}"
+        challenge: ${res},
+        response: ${chal},
+        pk_sig: ${pk_sig}, 
+        pr_sig: ${pr_sig},
+        sk_prf: ${sk_prf}
       }`;
       //pk_sig, pr_sig, sk_prf는 계정마다 항상 동일함 
       let myPair = `{
-        "amount_in": "100u128",
-        "amount_out": "100u128",
-        "token_in": "2u64",
-        "token_out": "2u64",
-        "maker_address": "${myAddr}",
-        "nonce": "${nonce}",
-        "valid_until": "600000u32"
+        amount_in: 100u128,
+        amount_out: 100u128,
+        token_in: 2u64,
+        token_out: 2u64,
+        maker_address: ${myAddr},
+        nonce: ${nonce},
+        valid_until: 600000u32
       }`;
       const inputs: any = [targetRecord,myPair,mySig];
       const aleoTransaction = Transaction.createTransaction(
