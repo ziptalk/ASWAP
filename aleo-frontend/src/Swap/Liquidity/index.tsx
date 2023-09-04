@@ -7,10 +7,9 @@ import PairBox from "./PairBox";
 const Liquidity = () => {
   return (
     <LiquidityContainer>
-      <PairBox />
+      {/* <PairBox /> */}
       <SwapAmountContainer type="liquidity" />
-      <PoolLiquidity />
-      <ConfirmButton />
+      {/* <PoolLiquidity /> */}
     </LiquidityContainer>
   );
 };

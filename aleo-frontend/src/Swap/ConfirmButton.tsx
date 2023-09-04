@@ -1,10 +1,63 @@
 import { Transaction, WalletAdapterNetwork, WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
-import { FC } from "react";
 
-export const ConfirmButton: FC = () => {
+interface ConfirmButtonProps {
+  text: string;
+  amount1: number;
+  amount2: number;
+  token1?: number;
+  token2?: number;
+}
+
+export const ConfirmButton = (props: ConfirmButtonProps) => {
   const { publicKey, requestTransaction, requestRecords } = useWallet();
+
+  const executeAddLiquidity = async () => {
+    if (props.amount1 === 0) throw new Error("Invalid amount");
+    if (!publicKey) throw new WalletNotConnectedError();
+
+    const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
+    if (!program) {
+      throw new Error("Invalid program name");
+    }
+    let tokenRecord: any;
+    let records: any;
+    if (requestRecords) {
+      records = await requestRecords(program);
+      for (let i = 0; i < records.length; i++) {
+        console.log(records[i]);
+        let amount: number = parseFloat(records[i].data.amount.replace("u128.private", ""));
+        let token_id: number = parseFloat(records[i].data.token_id.replace("u64.private", ""));
+        console.log("amount", amount === props.amount1);
+        console.log("token_id", token_id === props.token1);
+        console.log("spent", records[i].spent);
+        if (token_id === props.token1 && amount >= props.amount1 && records[i].spent === false) {
+          tokenRecord = records[i];
+          break;
+        }
+      }
+    }
+
+    console.log("tokenRecord", tokenRecord);
+
+    const inputs = [tokenRecord, publicKey, props.amount1 + "u128"];
+    const fee = 550_000;
+
+    const aleoTransaction = Transaction.createTransaction(
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      program,
+      "add_liquidity",
+      inputs,
+      fee
+    );
+
+    if (requestTransaction) {
+      // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
+      await requestTransaction(aleoTransaction);
+    }
+  };
 
   const executeSwap = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
@@ -75,13 +128,26 @@ export const ConfirmButton: FC = () => {
   };
 
   return (
-    <StyledComfirmButton
-      onClick={() => {
-        executeSwap();
-      }}
-    >
-      Swap
-    </StyledComfirmButton>
+    <>
+      {props.text === "Swap" && (
+        <StyledComfirmButton
+          onClick={() => {
+            executeSwap();
+          }}
+        >
+          Swap
+        </StyledComfirmButton>
+      )}
+      {props.text === "liquidity" && (
+        <StyledComfirmButton
+          onClick={() => {
+            executeAddLiquidity();
+          }}
+        >
+          Add Liquidity
+        </StyledComfirmButton>
+      )}
+    </>
   );
 };
 

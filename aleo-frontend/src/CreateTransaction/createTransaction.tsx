@@ -139,17 +139,20 @@ export const CreateTransaction: FC = () => {
     else if (option === 5) {
       let records: any;
       let targetRecord: any;
-
-      if (requestRecords) {
-        records = await requestRecords(program);
-        for (let i = 0; i < records.length; i++) {
-          console.log(records[i]);
-          console.log(records[i].data.microcredits);
-          if (records[i].spent === false) {
-            targetRecord = records[i];
-            break;
+      try {
+        if (requestRecords) {
+          records = await requestRecords(program);
+          for (let i = 0; i < records.length; i++) {
+            console.log(records[i]);
+            console.log(records[i].data.microcredits);
+            if (records[i].spent === false) {
+              targetRecord = records[i];
+              break;
+            }
           }
         }
+      } catch (e) {
+        console.log("Error: " + e);
       }
 
       // let myRecord = {
@@ -163,7 +166,7 @@ export const CreateTransaction: FC = () => {
       //     "token_id": "1u64.private"
       //   }
       // };
-      let liquidityAmount = "1000u128";
+      let liquidityAmount = "100u128";
       const inputs: any = [targetRecord, myAddr, liquidityAmount];
       const aleoTransaction = Transaction.createTransaction(
         publicKey,

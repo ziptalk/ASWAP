@@ -1,30 +1,93 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import IcEth from "../assets/icons/common/Ic_eth.svg";
+import { TokenLists } from "../constants";
+import Select from "react-select";
 
 interface StyledInputProps {
   text: string;
+  handleSelectTokenFrom?: (tokenId: number) => void;
+  handleSelectTokenTo?: (tokenId: number) => void;
+  handleAmountFrom?: (amount: number) => void;
+  handleAmountTo?: (amount: number) => void;
 }
 
 const StyledInput = (props: StyledInputProps) => {
   const { text } = props;
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
+  const [selectedOption, setSelectedOption] = useState(TokenLists[0].name);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+    // setInput(e.target.value);
+    props.handleAmountFrom && props.handleAmountFrom(Number(e.target.value));
+    props.handleAmountTo && props.handleAmountTo(Number(e.target.value));
   };
+
+  // Convert tokens to the format react-select expects
+  const selectOptions = TokenLists.map((token) => ({
+    label: token.name,
+    value: token.id,
+  }));
+
+  const handleSelectChange = (option: any) => {
+    // setSelectedOption(option ? { name: option.label, value: option.value } : null);
+    props.handleSelectTokenFrom && props.handleSelectTokenFrom(option.value);
+    props.handleSelectTokenTo && props.handleSelectTokenTo(option.value);
+  };
+
   return (
     <StyledInputBox>
-      <StyleInput type="number" value={input} placeholder="0.00" onChange={onChange} />
+      <StyleInput type="number" placeholder="0.00" onChange={onChange} />
       <TokenBox>
         <img src={IcEth} alt="eth" />
-        <TokenText>{text}</TokenText>
+        {/* <TokenText>{text}</TokenText> */}
+        <Select options={selectOptions} onChange={handleSelectChange} styles={SelectStyle} placeholder={"Select"} />
       </TokenBox>
     </StyledInputBox>
   );
 };
 
 export default StyledInput;
+
+const SelectStyle = {
+  control: (provided: any, state: any) => ({
+    ...provided,
+    fontSize: "16px",
+    paddingRight: "0px",
+    borderColor: state.isFocused ? "black" : "gray",
+    border: "none",
+
+    boxShadow: state.isFocused ? null : null,
+    "&:hover": {
+      borderColor: "gray",
+    },
+    fontWeight: "500",
+    textAlign: "center",
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isSelected ? "black" : "gray",
+    fontSize: "16px",
+    fontWeight: "500",
+  }),
+  input: (provided: any) => ({
+    ...provided,
+    fontSize: "16px",
+    width: "50px",
+    marginRight: "30px",
+    fontWeight: "700",
+    textAlign: "left",
+  }),
+  placeholder: (provided: any) => ({
+    ...provided,
+    textAlign: "left",
+  }),
+  singleValue: (provided: any) => ({
+    ...provided,
+    textAlign: "left",
+    marginLeft: "10px",
+  }),
+};
 
 const StyledInputBox = styled.div`
   display: flex;

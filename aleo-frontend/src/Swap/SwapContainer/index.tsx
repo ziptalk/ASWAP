@@ -7,8 +7,8 @@ const SwapContainer = () => {
   return (
     <SwapWrapper>
       <SwapAmountContainer type="Swap" />
-      <PoolLiquidity type="Swap" />
-      <ConfirmButton />
+      {/* <PoolLiquidity type="Swap" /> */}
+      {/* <ConfirmButton text="Swap" /> */}
     </SwapWrapper>
   );
 };
