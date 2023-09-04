@@ -93,8 +93,6 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
       valid_until: 600000u32
     }`;
 
-    //pk_sig, pr_sig, sk_prf는 계정마다 항상 동일함 
-
     let tokenSignature =`{
       challenge: ${res},
       response: ${chal},

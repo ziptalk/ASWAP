@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
 import IcEth from "../assets/icons/common/Ic_eth.svg";
 import { TokenLists } from "../constants";
 import Select from "react-select";
+import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
+import React, { FC, useCallback, useEffect, useState } from "react";
+import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
+
 
 interface StyledInputProps {
   text: string;
@@ -29,13 +32,49 @@ const StyledInput = (props: StyledInputProps) => {
     value: token.id,
   }));
 
+  const { requestRecords, publicKey } = useWallet();
+  const [requested, setRequested] = useState(false);
+  const [balance, setBalance] = useState(0);
+  const [tokenName, setTokenName] = useState("");
+
+  const getBalance = async (tokenId: number) => {
+    setBalance(-1)
+    if (!publicKey) throw new WalletNotConnectedError();
+
+    if (requestRecords) {
+      const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
+      if (!program) throw new Error("Please set REACT_APP_PROGRAM_NAME in .env");
+      let sumBalance = 0;
+      try {
+        const records = await requestRecords(program);
+        for (let i = 0; i < records.length; i++) {
+          // console.log(
+          //   records[i].data.token_id === (tokenId + "u64.private").toString(),
+          //   records[i].data.token_id,
+          //   tokenId + "u64.private"
+          // );
+          if (records[i].data.token_id === (tokenId + "u64.private").toString()) {
+            let amount = records[i].data.amount.replace("u128.private", "");
+            sumBalance += parseFloat(amount);
+          }
+        }
+      } catch (e) {
+        console.log("Error: " + e);
+      }
+      setBalance(sumBalance);
+    }
+  };
+
   const handleSelectChange = (option: any) => {
     // setSelectedOption(option ? { name: option.label, value: option.value } : null);
     props.handleSelectTokenFrom && props.handleSelectTokenFrom(option.value);
     props.handleSelectTokenTo && props.handleSelectTokenTo(option.value);
+    setTokenName(option.label)
+    getBalance(option.value);
   };
 
   return (
+    <>
     <StyledInputBox>
       <StyleInput type="number" placeholder="0.00" onChange={onChange} />
       <TokenBox>
@@ -44,6 +83,14 @@ const StyledInput = (props: StyledInputProps) => {
         <Select options={selectOptions} onChange={handleSelectChange} styles={SelectStyle} placeholder={"Select"} />
       </TokenBox>
     </StyledInputBox>
+    <TokenText>
+    {balance !== -1 && (
+      <div>
+        {tokenName} Balance: {balance} {/* Display the balance here */}
+      </div>
+    )}
+    </TokenText>
+    </>
   );
 };
 
@@ -142,3 +189,5 @@ const TokenText = styled.span`
   font-weight: 600;
   line-height: 24px;
 `;
+
+
