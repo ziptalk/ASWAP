@@ -193,8 +193,6 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
       </>
     )}
     </>
-      )}
-    </>
   );
 };
 
@@ -206,13 +204,13 @@ const Container = styled.div`
 `;
 
 const StyledComfirmButton = styled.button`
-  width: 460px;
-  margin-left: -30px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 17px 0;
+
   border: none;
   border-radius: 8px;
-  background: #404144;
-
-  padding: 10px 20px 10px 20px;
+  background: #b7b8cd;
 
   color: #fff;
   text-align: center;
