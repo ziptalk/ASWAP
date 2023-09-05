@@ -97,8 +97,11 @@ export const MintTokens: FC = () => {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center; /* 가로 방향 중앙 정렬 */
-  align-items: center; /* 세로 방향 중앙 정렬 */
+  justify-content: center; 
+  align-items: center; 
+
+  flex-direction: column;
+  width: 100%;
 `;
 
 const StyledInputBox = styled.div`
