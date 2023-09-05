@@ -59,6 +59,33 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
     }
   };
 
+  const executeRemoveLiquidity = async () => {
+    if (props.amount1 === 0) throw new Error("Invalid amount");
+    if (!publicKey) throw new WalletNotConnectedError();
+
+    const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
+    if (!program) {
+      throw new Error("Invalid program name");
+    }
+
+    const inputs = [props.token1 + "u64", props.amount1 + "u128"];
+    const fee = 5_500_000;
+
+    const aleoTransaction = Transaction.createTransaction(
+      publicKey,
+      WalletAdapterNetwork.Testnet,
+      program,
+      "remove_liquidity",
+      inputs,
+      fee
+    );
+
+    if (requestTransaction) {
+      // Returns a transaction Id, that can be used to check the status. Note this is not the on-chain transaction id
+      await requestTransaction(aleoTransaction);
+    }
+  };
+
   const executeSwap = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
     const program: string | undefined = process.env.REACT_APP_PROGRAM_NAME;
@@ -143,7 +170,8 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
           Swap
         </StyledComfirmButton>
       )}
-      {props.text === "liquidity" && (
+       {props.text === "liquidity" && (
+      <>
         <StyledComfirmButton
           onClick={() => {
             executeAddLiquidity();
@@ -151,7 +179,19 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
         >
           Add Liquidity
         </StyledComfirmButton>
-      )}
+      </>
+    )}
+    {props.text === "liquidity" && (
+      <>
+        <StyledComfirmButton
+          onClick={() => {
+            executeRemoveLiquidity();
+          }}
+        >
+          Remove Liquidity
+        </StyledComfirmButton>
+      </>
+    )}
     </>
   );
 };
