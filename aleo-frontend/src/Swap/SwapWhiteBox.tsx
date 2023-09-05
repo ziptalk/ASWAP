@@ -15,7 +15,7 @@ const SwapWhiteBoxContainer = styled.div`
   margin-top: 14px;
 
   border-radius: 20px;
-  padding: 30px 30px 30px 30px;
+  padding: 35px;
   background-color: #fff;
   text-align: left;
 `;
