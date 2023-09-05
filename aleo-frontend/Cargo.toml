@@ -1,0 +1,21 @@
+[package]
+name = "aleo_signatures"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "sign"
+path = "src/main.rs"
+
+[dependencies]
+snarkvm-console-account = "0.14.2"
+snarkvm-console-network = "0.14.2"
+snarkvm-console-types = "0.14.2"
+snarkvm = "0.14.2"
+snarkvm-fields = "0.14.2"
+snarkvm-utilities = "0.14.2"
+indexmap = "2.0.0"
+rand = "0.8.4"
+dotenv = "0.15"
