@@ -6,9 +6,9 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 
-
 interface StyledInputProps {
   text: string;
+  type?: string;
   handleSelectTokenFrom?: (tokenId: number) => void;
   handleSelectTokenTo?: (tokenId: number) => void;
   handleAmountFrom?: (amount: number) => void;
@@ -19,6 +19,7 @@ const StyledInput = (props: StyledInputProps) => {
   const { text } = props;
   // const [input, setInput] = useState("");
   const [selectedOption, setSelectedOption] = useState(TokenLists[0].name);
+  const [logo, setLogo] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setInput(e.target.value);
@@ -36,9 +37,10 @@ const StyledInput = (props: StyledInputProps) => {
   const [requested, setRequested] = useState(false);
   const [balance, setBalance] = useState(0);
   const [tokenName, setTokenName] = useState("");
+  const [currentLiquidity, setCurrentLiquidity] = useState(0);
 
   const getBalance = async (tokenId: number) => {
-    setBalance(-1)
+    setBalance(-1);
     if (!publicKey) throw new WalletNotConnectedError();
 
     if (requestRecords) {
@@ -69,27 +71,33 @@ const StyledInput = (props: StyledInputProps) => {
     // setSelectedOption(option ? { name: option.label, value: option.value } : null);
     props.handleSelectTokenFrom && props.handleSelectTokenFrom(option.value);
     props.handleSelectTokenTo && props.handleSelectTokenTo(option.value);
-    setTokenName(option.label)
+    setTokenName(option.label);
+    setLogo(TokenLists[option.value - 1].logo);
     getBalance(option.value);
   };
 
   return (
     <>
-    <StyledInputBox>
-      <StyleInput type="number" placeholder="0.00" onChange={onChange} />
-      <TokenBox>
-        <img src={IcEth} alt="eth" />
-        {/* <TokenText>{text}</TokenText> */}
-        <Select options={selectOptions} onChange={handleSelectChange} styles={SelectStyle} placeholder={"Select"} />
-      </TokenBox>
-    </StyledInputBox>
-    <TokenText>
-    {balance !== -1 && (
-      <div>
-        {tokenName} Balance: {balance} {/* Display the balance here */}
-      </div>
-    )}
-    </TokenText>
+      <StyledInputBox>
+        <StyleInput type="number" placeholder="0.00" onChange={onChange} />
+        <TokenBox>
+          {logo !== "" ? <LogoImg src={logo} alt="eth" /> : <></>}
+          {/* <TokenText>{text}</TokenText> */}
+          <Select options={selectOptions} onChange={handleSelectChange} styles={SelectStyle} placeholder={"Select"} />
+        </TokenBox>
+      </StyledInputBox>
+      <TokenText>
+        {balance !== -1 && (
+          <div>
+            {tokenName} Balance: {balance} {/* Display the balance here */}
+          </div>
+        )}
+        {currentLiquidity !== -1 && props.type === "liquidity" && (
+          <div>
+            {tokenName} Current Liquidity : {currentLiquidity} {/* Display the current liquidity here */}
+          </div>
+        )}
+      </TokenText>
     </>
   );
 };
@@ -133,7 +141,7 @@ const SelectStyle = {
   singleValue: (provided: any) => ({
     ...provided,
     textAlign: "left",
-    marginLeft: "10px",
+    marginLeft: "5px",
   }),
 };
 
@@ -159,6 +167,11 @@ const StyleInput = styled.input`
   line-height: 30px;
 
   outline: none;
+`;
+
+const LogoImg = styled.img`
+  width: 30px;
+  height: 30px;
 `;
 
 const TokenBox = styled.div`
@@ -187,5 +200,3 @@ const TokenText = styled.span`
   font-weight: 600;
   line-height: 24px;
 `;
-
-

@@ -64,4 +64,6 @@ const SwapAndLiquidityContainer = styled.div`
 
 const MintTokenContainer = styled.div``;
 
-const RequestRecordContainer = styled.div``;
+const RequestRecordContainer = styled.div`
+  width: 400px;
+`;

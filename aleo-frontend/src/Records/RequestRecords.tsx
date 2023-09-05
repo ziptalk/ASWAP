@@ -40,21 +40,20 @@ export const RequestRecord: FC = () => {
   return (
     <>
       <Container>
-      <SwapWhiteBox>
-      <ProgramName>Program Name</ProgramName>
-        <StyledInputBox>
-        <StyleInput
-            type="text"
-            placeholder="example.aleo"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-        />
-        </StyledInputBox>
+        <SwapWhiteBox>
+          <ProgramName>Program Name</ProgramName>
+          <StyledInputBox>
+            <StyleInput
+              type="text"
+              placeholder="example.aleo"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </StyledInputBox>
         </SwapWhiteBox>
         <RequestButton onClick={onClick} disabled={!publicKey}>
           Request Records
         </RequestButton>
-        
 
         <RequestLists>
           {requestList.map((request: any) => (
@@ -81,10 +80,10 @@ const Container = styled.div`
 const StyledInputBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
+  width: 400px;
 
-  width: 100%;
   margin-bottom: 16px;
   background: white;
 
@@ -149,7 +148,7 @@ const RequestList = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  justify-content: center; 
+  justify-content: center;
   width: 300px;
   padding: 10px 0;
   border-bottom: 1px solid #33343e;
