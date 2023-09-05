@@ -93,7 +93,7 @@ const StyledInputBox = styled.div`
 
 const StyleInput = styled.input`
   border: none;
-  margin-left: 20px;
+  text-align: center;
   width: 60%;
   font-size: 20px;
   font-style: normal;
@@ -124,7 +124,7 @@ const RequestButton = styled.button`
 
   border: none;
   border-radius: 8px;
-  background: #b7b8cd;
+  background: #4a5967;
 
   color: #fff;
   text-align: center;

@@ -57,48 +57,48 @@ export const MintTokens: FC = () => {
 
   return (
     <>
-    <Container>
-    <SwapWhiteBox>
-        <TokenSelectTitle>Selected Token: {selectedTokenName}</TokenSelectTitle>
-        <TokenList>
-          {TokenLists.map((token: any) => (
-            <TokensName
-              onClick={() => {
-                handleTokenSelect(token.name, token.id);
-              }}
-            >
-              {token.name}
-            </TokensName>
-          ))}
-        </TokenList>
-      <AmountInputBox>
-        <AmountInputTitle>Amount</AmountInputTitle>
-        <StyledInputBox>
-          <StyleInput
-            type="text"
-            placeholder="0.0"
-            onChange={(e) => {
-              handleAmountInput(e);
-            }}
-          />
-        </StyledInputBox>
-      </AmountInputBox>
-      </SwapWhiteBox>
+      <Container>
+        <SwapWhiteBox>
+          <TokenSelectTitle>Selected Token: {selectedTokenName}</TokenSelectTitle>
+          <TokenList>
+            {TokenLists.map((token: any) => (
+              <TokensName
+                onClick={() => {
+                  handleTokenSelect(token.name, token.id);
+                }}
+              >
+                {token.name}
+              </TokensName>
+            ))}
+          </TokenList>
+          <AmountInputBox>
+            <AmountInputTitle>Amount</AmountInputTitle>
+            <StyledInputBox>
+              <StyleInput
+                type="text"
+                placeholder="0.0"
+                onChange={(e) => {
+                  handleAmountInput(e);
+                }}
+              />
+            </StyledInputBox>
+          </AmountInputBox>
+        </SwapWhiteBox>
       </Container>
       <FeeBox>
         <FeeTitle>Fee</FeeTitle>
         <FeeAmount>{fee / 10 ** 6} Aleo</FeeAmount>
       </FeeBox>
-      
-    <MintButton onClick={mint}>Mint Tokens</MintButton>
+
+      <MintButton onClick={mint}>Mint Tokens</MintButton>
     </>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
 
   flex-direction: column;
   width: 100%;
@@ -106,7 +106,7 @@ const Container = styled.div`
 
 const StyledInputBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   width: 100%;
@@ -119,7 +119,7 @@ const StyledInputBox = styled.div`
 const StyleInput = styled.input`
   border: none;
   color: #15151a;
-  margin-left: 20px;
+  text-align: center;
   width: 60%;
   font-size: 20px;
   font-style: normal;
@@ -213,11 +213,11 @@ const FeeAmount = styled.div`
 const MintButton = styled.button`
   width: 100%;
   margin-top: 14px;
-  padding: 17px 0;
+  padding: 17px 10px;
 
   border: none;
   border-radius: 8px;
-  background: #b7b8cd;
+  background: #4a5967;
 
   color: #fff;
   text-align: center;
