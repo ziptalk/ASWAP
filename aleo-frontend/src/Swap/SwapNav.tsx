@@ -14,18 +14,20 @@ export const SwapNav = (props: SwapNavProps) => {
   const { option, handleSwitchOption } = props;
 
   return (
-    <Container>
-      <SwapNavContainer>
-        <SwapNavBox onClick={() => handleSwitchOption("Swap")} status={option === "Swap" ? true : false}>
-          {option === "Liquidity" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
-          Swap
-        </SwapNavBox>
-        <SwapNavBox onClick={() => handleSwitchOption("Liquidity")} status={option === "Liquidity" ? true : false}>
-          {option === "Swap" ? <img src={IcLiqudityWhite} alt="liquidity" /> : <img src={IcLiqudity} alt="liquidity" />}
-          Add Liquidity
-        </SwapNavBox>
-      </SwapNavContainer>
-    </Container>
+    <SwapNavContainer>
+      <SwapNavBox onClick={() => handleSwitchOption("Swap")} status={option === "Swap" ? true : false}>
+        {option === "Swap" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
+        Swap
+      </SwapNavBox>
+      <SwapNavBox onClick={() => handleSwitchOption("Liquidity")} status={option === "Liquidity" ? true : false}>
+        {option === "Liquidity" ? (
+          <img src={IcLiqudityWhite} alt="liqudity" />
+        ) : (
+          <img src={IcLiqudity} alt="liqudity" />
+        )}
+        Liqudity
+      </SwapNavBox>
+    </SwapNavContainer>
   );
 };
 
