@@ -182,7 +182,7 @@ const MintButton = styled.button`
 
   border: none;
   border-radius: 8px;
-  background: #b7b8cd;
+  background: #404144;
 
   color: #fff;
   text-align: center;
