@@ -32,7 +32,7 @@ export const Wallet: FC = () => {
         <WalletConnect>
           <WalletMultiButton />
           {/* <WalletConnectButton /> */}
-          <WalletDisconnectButton />
+          {/* <WalletDisconnectButton /> */}
         </WalletConnect>
         {/* <WalletModal /> */}
         {/* <WalletModalButton /> */}
