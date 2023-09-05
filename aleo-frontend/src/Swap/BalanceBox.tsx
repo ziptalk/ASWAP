@@ -73,9 +73,10 @@ const BalanceBoxContainer = styled.div`
 
 const BalanceText = styled.button`
   color: #4a5967;
-  /* Lable/medium 1 */
   font-size: 12px;
-  font-style: normal;
   font-weight: 500;
   line-height: 18px;
+
+  background-color: #fff;
+  border: none;
 `;

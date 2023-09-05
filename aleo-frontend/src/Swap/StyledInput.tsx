@@ -103,6 +103,7 @@ const SelectStyle = {
     paddingRight: "0px",
     borderColor: state.isFocused ? "black" : "gray",
     border: "none",
+    backgroundColor: "#f8f8fb",
 
     boxShadow: state.isFocused ? null : null,
     "&:hover": {
@@ -143,18 +144,15 @@ const StyledInputBox = styled.div`
 
   width: 100%;
   margin-bottom: 16px;
-  margin-left: -24px;
-  padding: 10px 20px 10px 20px;
 
   border-radius: 20px;
   border: 1px solid #d1d1d1;
 `;
 const StyleInput = styled.input`
-  width: 80%;
-
   border: none;
   color: #15151a;
-
+  margin-left: 20px;
+  width: 60%;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;

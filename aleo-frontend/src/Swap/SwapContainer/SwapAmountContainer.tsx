@@ -50,13 +50,13 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
           handleSelectTokenFrom={handleSelectTokenFrom}
           handleAmountFrom={handleAmountFrom}
         />
-        <BalanceBox type={type} tokenId={tokenIds[0]} />
+        {/* <BalanceBox type={type} tokenId={tokenIds[0]} /> */}
         {type === "liquidity" && <Space />}
         {type === "Swap" && (
           <SwitchWrapper>
-            <SwitchBox onClick={handleSwitchSwap}>
+            {/* <SwitchBox onClick={handleSwitchSwap}>
               <img src={IcSwitch} alt="switch" style={{ position: "absolute", top: "10px", left: "8.8px" }} />
-            </SwitchBox>
+            </SwitchBox> */}
           </SwitchWrapper>
         )}
         {type === "Swap" && <SwapAmountTitle>To.</SwapAmountTitle>}
@@ -67,7 +67,7 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
               handleSelectTokenTo={handleSelectTokenTo}
               handleAmountTo={handleAmountTo}
             />
-            <BalanceBox type={type} tokenId={tokenIds[1]} />
+            {/* <BalanceBox type={type} tokenId={tokenIds[1]} /> */}
           </>
         )}
       </SwapWhiteBox>
@@ -100,7 +100,7 @@ const SwitchWrapper = styled.div`
   justify-content: center;
 
   width: 100%;
-  margin-top: 16px;
+  margin-top: 30px;
 
   text-align: center;
 `;
