@@ -2,6 +2,7 @@ import { WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
 import React, { FC, useCallback, useState } from "react";
+import SwapWhiteBox from "../Swap/SwapWhiteBox";
 
 export const RequestRecord: FC = () => {
   const { wallet, publicKey, requestRecords } = useWallet();
@@ -39,19 +40,21 @@ export const RequestRecord: FC = () => {
   return (
     <>
       <Container>
-        <ProgramInputContainer>
-          <ProgramName>Program Name</ProgramName>
-          <input
+      <SwapWhiteBox>
+      <ProgramName>Program Name</ProgramName>
+        <StyledInputBox>
+        <StyleInput
             type="text"
             placeholder="example.aleo"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-          />
-        </ProgramInputContainer>
-
+        />
+        </StyledInputBox>
+        </SwapWhiteBox>
         <RequestButton onClick={onClick} disabled={!publicKey}>
           Request Records
         </RequestButton>
+        
 
         <RequestLists>
           {requestList.map((request: any) => (
@@ -75,43 +78,63 @@ const Container = styled.div`
   gap: 10px;
 `;
 
-const ProgramInputContainer = styled.div`
+const StyledInputBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 300px;
+  align-items: center;
+
+  width: 100%;
+  margin-bottom: 16px;
+  background: white;
+
+  border-radius: 20px;
+  border: 1px solid #d1d1d1;
+`;
+
+const StyleInput = styled.input`
+  border: none;
+  margin-left: 20px;
+  width: 60%;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+
+  outline: none;
 `;
 
 const ProgramName = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+  color: #33343e;
+
+  /* Body text/Large 2 */
   font-size: 18px;
-  color: white;
-  font-size: 16px;
   font-style: normal;
-  font-weight: 500;
-  line-height: 26px;
+  font-weight: 600;
+  line-height: normal;
+
+  text-align: center;
 `;
 
 const RequestButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 17px 0;
 
-  width: 200px;
-  padding: 9px 0;
+  border: none;
+  border-radius: 8px;
+  background: #b7b8cd;
 
-  border-radius: 20px;
+  color: #fff;
   text-align: center;
-  font-size: 18px;
+  font-size: 15px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   line-height: normal;
-  letter-spacing: -0.09px;
 
-  text-align: center;
   cursor: pointer;
-
-  transition: all 0.3s ease-in-out;
 `;
 
 const RequestLists = styled.div`
@@ -126,6 +149,7 @@ const RequestList = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  justify-content: center; 
   width: 300px;
   padding: 10px 0;
   border-bottom: 1px solid #33343e;

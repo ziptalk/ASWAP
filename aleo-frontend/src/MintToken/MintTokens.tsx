@@ -8,6 +8,7 @@ import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import styled from "@emotion/styled";
 import { FC, useState } from "react";
 import { TokenLists } from "../constants";
+import SwapWhiteBox from "../Swap/SwapWhiteBox";
 
 export const MintTokens: FC = () => {
   const { publicKey, requestTransaction, requestRecords } = useWallet();
@@ -55,8 +56,9 @@ export const MintTokens: FC = () => {
   };
 
   return (
+    <>
     <Container>
-      <TokenSelectBox>
+    <SwapWhiteBox>
         <TokenSelectTitle>Selected Token: {selectedTokenName}</TokenSelectTitle>
         <TokenList>
           {TokenLists.map((token: any) => (
@@ -69,49 +71,72 @@ export const MintTokens: FC = () => {
             </TokensName>
           ))}
         </TokenList>
-      </TokenSelectBox>
       <AmountInputBox>
         <AmountInputTitle>Amount</AmountInputTitle>
-        <InputBox>
-          <AmountInput
+        <StyledInputBox>
+          <StyleInput
             type="text"
             placeholder="0.0"
             onChange={(e) => {
               handleAmountInput(e);
             }}
           />
-        </InputBox>
+        </StyledInputBox>
       </AmountInputBox>
+      </SwapWhiteBox>
+      </Container>
       <FeeBox>
         <FeeTitle>Fee</FeeTitle>
         <FeeAmount>{fee / 10 ** 6} Aleo</FeeAmount>
       </FeeBox>
-      <MintButton onClick={mint}>Mint Tokens</MintButton>
-    </Container>
+      
+    <MintButton onClick={mint}>Mint Tokens</MintButton>
+    </>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  text-align: left;
-
-  width: 100%;
-  margin-top: 14px;
-  padding: 35px;
-  color: black;
-  font-style: normal;
-
-  border-radius: 20px;
-  background-color: #fff;
+  justify-content: center; /* 가로 방향 중앙 정렬 */
+  align-items: center; /* 세로 방향 중앙 정렬 */
 `;
 
-const TokenSelectBox = styled.div``;
-const TokenSelectTitle = styled.div`
-  font-size: 17px;
-  margin-bottom: 10px;
+const StyledInputBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  margin-bottom: 16px;
+
+  border-radius: 20px;
+  border: 1px solid #d1d1d1;
+`;
+
+const StyleInput = styled.input`
+  border: none;
+  color: #15151a;
+  margin-left: 20px;
+  width: 60%;
+  font-size: 20px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
+  line-height: 30px;
+
+  outline: none;
+`;
+const TokenSelectTitle = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+
+  color: #33343e;
+  /* Body text/Large 2 */
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  text-align: center;
 `;
 const TokenList = styled.div`
   display: flex;
@@ -135,9 +160,17 @@ const AmountInputBox = styled.div`
   margin-top: 30px;
 `;
 const AmountInputTitle = styled.div`
-  font-size: 17px;
+  width: 100%;
+  margin-bottom: 20px;
+
+  color: #33343e;
+  /* Body text/Large 2 */
+  font-size: 18px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: normal;
+
+  text-align: center;
 `;
 const InputBox = styled.div`
   display: flex;
@@ -175,14 +208,13 @@ const FeeAmount = styled.div`
 `;
 
 const MintButton = styled.button`
-  width: 50%;
-  margin-left: 25%;
+  width: 100%;
   margin-top: 14px;
   padding: 17px 0;
 
   border: none;
   border-radius: 8px;
-  background: #404144;
+  background: #b7b8cd;
 
   color: #fff;
   text-align: center;
