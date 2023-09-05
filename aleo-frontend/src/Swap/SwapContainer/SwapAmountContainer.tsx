@@ -47,6 +47,7 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
         {type === "Swap" && <SwapAmountTitle>From.</SwapAmountTitle>}
         <StyledInput
           text={isSwitchSwap[0]}
+          type={type}
           handleSelectTokenFrom={handleSelectTokenFrom}
           handleAmountFrom={handleAmountFrom}
         />
@@ -64,6 +65,7 @@ const SwapAmountContainer = (props: SwapAmountContainerProps) => {
           <>
             <StyledInput
               text={isSwitchSwap[1]}
+              type={type}
               handleSelectTokenTo={handleSelectTokenTo}
               handleAmountTo={handleAmountTo}
             />

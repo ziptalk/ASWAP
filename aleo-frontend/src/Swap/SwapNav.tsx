@@ -16,16 +16,16 @@ export const SwapNav = (props: SwapNavProps) => {
   return (
     <SwapNavContainer>
       <SwapNavBox onClick={() => handleSwitchOption("Swap")} status={option === "Swap" ? true : false}>
-        {option === "Swap" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
+        {option !== "Swap" ? <img src={IcSwap} alt="swap" /> : <img src={IcSwapBlack} alt="swap" />}
         Swap
       </SwapNavBox>
       <SwapNavBox onClick={() => handleSwitchOption("Liquidity")} status={option === "Liquidity" ? true : false}>
-        {option === "Liquidity" ? (
-          <img src={IcLiqudityWhite} alt="liqudity" />
+        {option !== "Liquidity" ? (
+          <img src={IcLiqudityWhite} alt="liquidity" />
         ) : (
-          <img src={IcLiqudity} alt="liqudity" />
+          <img src={IcLiqudity} alt="liquidity" />
         )}
-        Liqudity
+        Liquidity
       </SwapNavBox>
     </SwapNavContainer>
   );

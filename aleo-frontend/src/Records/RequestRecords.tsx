@@ -78,8 +78,9 @@ const Container = styled.div`
 const ProgramInputContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 300px;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 400px;
 `;
 
 const ProgramName = styled.div`

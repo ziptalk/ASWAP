@@ -93,7 +93,7 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
       throw new Error("Invalid program name");
     }
     const myAddr = process.env.REACT_APP_ADDRESS1;
-    const pk_sig= process.env.REACT_APP_PK_SIG;
+    const pk_sig = process.env.REACT_APP_PK_SIG;
     const pr_sig = process.env.REACT_APP_PR_SIG;
     const sk_prf = process.env.REACT_APP_SK_PRF;
     const chal = process.env.REACT_APP_CHALLENGE;
@@ -104,12 +104,12 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
 
     if (props.amount1 === 0) throw new Error("Invalid amount");
     if (props.amount2 === 0) throw new Error("Invalid amount");
-    let amount_in = props.amount1 + "u128"
-    let amount_out = props.amount2 + "u128"
-    let token_in = props.token1 + "u64"
-    let token_out = props.token2 + "u64"
+    let amount_in = props.amount1 + "u128";
+    let amount_out = props.amount2 + "u128";
+    let token_in = props.token1 + "u64";
+    let token_out = props.token2 + "u64";
 
-    //pk_sig, pr_sig, sk_prf는 계정마다 항상 동일함 
+    //pk_sig, pr_sig, sk_prf는 계정마다 항상 동일함
     let tokenPair = `{
       amount_in: ${amount_in},
       amount_out: ${amount_out},
@@ -120,7 +120,7 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
       valid_until: 600000u32
     }`;
 
-    let tokenSignature =`{
+    let tokenSignature = `{
       challenge: ${res},
       response: ${chal},
       pk_sig: ${pk_sig}, 
@@ -170,28 +170,28 @@ export const ConfirmButton = (props: ConfirmButtonProps) => {
           Swap
         </StyledComfirmButton>
       )}
-       {props.text === "liquidity" && (
-      <>
-        <StyledComfirmButton
-          onClick={() => {
-            executeAddLiquidity();
-          }}
-        >
-          Add Liquidity
-        </StyledComfirmButton>
-      </>
-    )}
-    {props.text === "liquidity" && (
-      <>
-        <StyledComfirmButton
-          onClick={() => {
-            executeRemoveLiquidity();
-          }}
-        >
-          Remove Liquidity
-        </StyledComfirmButton>
-      </>
-    )}
+      {props.text === "liquidity" && (
+        <>
+          <StyledComfirmButton
+            onClick={() => {
+              executeAddLiquidity();
+            }}
+          >
+            Add Liquidity
+          </StyledComfirmButton>
+        </>
+      )}
+      {props.text === "liquidity" && (
+        <>
+          <StyledComfirmButton
+            onClick={() => {
+              executeRemoveLiquidity();
+            }}
+          >
+            Remove Liquidity
+          </StyledComfirmButton>
+        </>
+      )}
     </>
   );
 };
@@ -204,13 +204,13 @@ const Container = styled.div`
 `;
 
 const StyledComfirmButton = styled.button`
-  width: 100%;
+  width: 460px;
   margin-top: 14px;
   padding: 17px 0;
 
   border: none;
   border-radius: 8px;
-  background: #b7b8cd;
+  background: #4a5967;
 
   color: #fff;
   text-align: center;
